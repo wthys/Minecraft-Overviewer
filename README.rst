@@ -17,6 +17,15 @@ http://github.com/brownan/Minecraft-Overviewer/wiki/Map-examples
 
 (To contact me, send me a message on Github)
 
+
+Notice
+======
+
+Please note that this branch only supports the old chunk-based format.  You
+shouldn't need to use this branch, as Minecraft now stores worlds in the newer
+region based format.
+
+
 Features
 ========
 
