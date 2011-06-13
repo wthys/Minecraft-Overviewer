@@ -294,6 +294,19 @@ var overviewer = {
                         continue;
                     }
 
+		    if (item.type == 'player') {
+                        var marker = new google.maps.Marker({
+                            'position': overviewer.util.fromWorldToLatLng(item.x,
+                                item.y, item.z),
+                             'map':     overviewer.map,
+                             'title':   jQuery.trim(item.name),
+                             'icon':    overviewerConfig.CONST.image.playerMarker
+                        });
+
+			overviewer.util.createMarkerInfoWindow(marker,item);
+                        continue;
+		    }
+
                     var matched = false;
                     for (j in overviewerConfig.objectGroups.signs) {
                         var signGroup = overviewerConfig.objectGroups.signs[j];
@@ -320,7 +333,7 @@ var overviewer = {
                             overviewer.util.debug(label);
                             overviewer.collections.markers[label].push(marker);
                             if (item.type == 'sign') {
-                                overviewer.util.createMarkerInfoWindow(marker);
+                                overviewer.util.createMarkerInfoWindow(marker, item);
                             }
                         }
                     }
@@ -777,9 +790,12 @@ var overviewer = {
          * 
          * @param google.maps.Marker marker
          */
-        'createMarkerInfoWindow': function(marker) {
+        'createMarkerInfoWindow': function(marker, item) {
             var windowContent = '<div class="infoWindow"><img src="' + marker.icon +
                 '"/><p>' + marker.title.replace(/\n/g,'<br/>') + '</p></div>';
+	    if (item.type == "player") {
+	        windowContent = '<div class="infoWindow"><h4>' + item.name + '</h4><span class="health">' + item.health + '/20</span></div>';
+	    }
             var infowindow = new google.maps.InfoWindow({
                 'content': windowContent
             });

@@ -71,6 +71,7 @@ class MapGen(object):
         self.web_assets_hook = configInfo.get('web_assets_hook', None)
         self.web_assets_path = configInfo.get('web_assets_path', None)
         self.bg_color = configInfo.get('bg_color')
+	self.doplayers = configInfo.get('players', False)
         
         if not len(quadtrees) > 0:
             raise ValueError("there must be at least one quadtree to work on")
@@ -153,12 +154,15 @@ class MapGen(object):
         # in self.world.POI.  To make sure we don't remove these from markers.js
         # we need to merge self.world.POI with the persistant data in world.PersistentData
 
-        self.world.POI += filter(lambda x: x['type'] != 'spawn', self.world.persistentData['POI'])
+        self.world.POI += filter(lambda x: x['type'] != 'spawn' and x['type'] != 'player', self.world.persistentData['POI'])
         
         if self.nosigns:
             markers = filter(lambda x: x['type'] != 'sign', self.world.POI)
         else:
             markers = self.world.POI
+
+	if not self.doplayers:
+		markers = filter(lambda x: x['type'] != 'player', markers)
 
         # write out the default marker table
         with open(os.path.join(self.destdir, "markers.js"), 'w') as output:

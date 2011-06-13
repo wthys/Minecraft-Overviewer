@@ -109,6 +109,7 @@ def main():
     parser.add_option("--skip-js", dest="skipjs", action="store_true", help="Don't output marker.js or regions.js")
     parser.add_option("--no-signs", dest="nosigns", action="store_true", help="Don't output signs to markers.js")
     parser.add_option("--display-config", dest="display_config", action="store_true", help="Display the configuration parameters, but don't render the map.  Requires all required options to be specified", commandLineOnly=True)
+    parser.add_option("--players", dest="players", action="store_true", help="Put the players on the map")
     #parser.add_option("--write-config", dest="write_config", action="store_true", help="Writes out a sample config file", commandLineOnly=True)
 
     options, args = parser.parse_args()

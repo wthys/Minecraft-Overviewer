@@ -229,6 +229,17 @@ class World(object):
                 msg="Spawn", type="spawn", chunk=(chunkX, chunkY)))
         self.spawn = (spawnX, spawnY, spawnZ)
 
+    def findPlayers(self):
+	    playerdir = os.path.join(self.worlddir, 'players')
+	    players = os.listdir(os.path.join(playerdir))
+	    for playerFile in players:
+		    player = nbt.NBTFileReader(open(os.path.join(playerdir, playerFile), 'r')).read_all()[1]
+		    posx, posy, posz = tuple(player['Pos'])
+		    name = playerFile.split('.')[0]
+		    health = player['Health']
+		    self.POI.append( dict(x=posx, y=posy, z=posz, name=name,
+			    health=health, type="player", chunk=(posx/16,posy/16)))
+
     def go(self, procs):
         """Scan the world directory, to fill in
         self.{min,max}{col,row} for use later in quadtree.py. This
@@ -272,6 +283,7 @@ class World(object):
         self.maxrow = maxrow
 
         self.findTrueSpawn()
+	self.findPlayers()
 
     def _iterate_regionfiles(self,regionlist=None):
         """Returns an iterator of all of the region files, along with their 

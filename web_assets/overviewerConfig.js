@@ -16,7 +16,8 @@ var overviewerConfig = {
             'signMarker':       'signpost_icon.png',
             'compass':          'compass.png',
             'spawnMarker':      'http://google-maps-icons.googlecode.com/files/home.png',
-            'queryMarker':      'http://google-maps-icons.googlecode.com/files/regroup.png'
+            'queryMarker':      'http://google-maps-icons.googlecode.com/files/regroup.png',
+	    'playerMarker':      'http://google-maps-icons.googlecode.com/files/hiking.png',
         },
         'mapDivId':             'mcmap',
         'regionStrokeWeight':   2
